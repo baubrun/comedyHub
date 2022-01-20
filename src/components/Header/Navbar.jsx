@@ -1,14 +1,18 @@
-import { IconButton } from "@mui/material";
+import { IconButton, ListItemText } from "@mui/material";
 import React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import HomeIcon from "@mui/icons-material/Home";
 import { useHistory } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
-import AddBusinessIcon from "@mui/icons-material/AddBusiness";
-import BusinessIcon from "@mui/icons-material/Business";
+import LocalActivityIcon from "@mui/icons-material/LocalActivity";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
+import {
+  EVENTS_PAGE,
+  HOME_PAGE,
+  CART_PAGE,
+} from "../../shared/constants/navigation";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,32 +46,25 @@ const Navbar = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={() => handleClick("/")}>
+        <MenuItem onClick={() => handleClick(HOME_PAGE.path)}>
           <ListItemIcon>
-            <HomeIcon fontSize="small" />
+            <HomeIcon fontSize="small" color="primary" />
           </ListItemIcon>
-          Home
+          <ListItemText primary="HOME" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleClick("/search")}>
+        <MenuItem onClick={() => handleClick(EVENTS_PAGE.path)}>
           <ListItemIcon>
-            <SearchIcon fontSize="small" />
+            <LocalActivityIcon fontSize="small" color="secondary" />
           </ListItemIcon>
-          Search
+          <ListItemText primary="EVENTS" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleClick("/search?purpose=for-sale")}>
+        <MenuItem onClick={() => handleClick(CART_PAGE.path)}>
           <ListItemIcon>
-            <AddBusinessIcon fontSize="small" />
+            <ShoppingCartIcon fontSize="small" color="primary" />
           </ListItemIcon>
-          To Buy
-        </MenuItem>
-
-        <MenuItem onClick={() => handleClick("/search?purpose=for-rent")}>
-          <ListItemIcon>
-            <BusinessIcon fontSize="small" />
-          </ListItemIcon>
-          To Rent
+          <ListItemText primary="CART" />
         </MenuItem>
       </Menu>
     </>
