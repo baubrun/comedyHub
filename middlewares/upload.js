@@ -1,16 +1,11 @@
 const multer = require("multer");
 const { v1: uuidv1 } = require("uuid");
 const fs = require("fs");
-
-const devUploadsPath = "./public/uploads";
-const prodUploadsPath = "./build/uploads";
-
-const dest =
-  process.env.NODE_ENV === "production" ? prodUploadsPath : devUploadsPath;
+const { uploadDestination } = require("./util/index");
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, dest);
+    cb(null, uploadDestination);
   },
   filename: (req, file, cb) => {
     cb(null, uuidv1());
@@ -30,9 +25,9 @@ const multerInit = multer({
 }).any("uploads");
 
 const upload = (req, res, next) => {
-  const dir = fs.existsSync(dest);
-  if (!dir) {
-    fs.mkdirSync(dest);
+  const uploadsDir = fs.existsSync(uploadDestination);
+  if (!uploadsDir) {
+    fs.mkdirSync(uploadDestination);
   }
 
   multerInit(req, res, (err) => {

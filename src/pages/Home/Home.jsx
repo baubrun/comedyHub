@@ -2,6 +2,8 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import homeImg from "../../shared/images/club-2.jpg";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const titleStyle = {
   fontWeight: "bolder",
@@ -32,13 +34,12 @@ const Home = () => {
       </Grid>
 
       <Grid container>
-        {/* <img sx={classes.homeImg} src="/images/club-2.jpg" alt="" /> */}
-        {/* <LazyLoadImage
+        <LazyLoadImage
           alt=""
           effect="blur"
-          src="/images/club-2.jpg"
-          style={{ objectFit: "cover" }}
-        /> */}
+          src={homeImg}
+          style={{ objectFit: "contain", width: "100%" }}
+        />
       </Grid>
     </>
   );

@@ -2,6 +2,7 @@ const Events = require("../models/events");
 const mongoose = require("mongoose");
 const path = require("path");
 const fs = require("fs");
+const { uploadDestination } = require("../middlewares/util");
 
 const postEvent = async (req, res) => {
   const {
@@ -90,8 +91,7 @@ const deleteEvent = async (req, res) => {
     const event = await Events.findOneAndDelete({ _id: id });
 
     const __dirname = path.resolve(path.dirname(""));
-    const pathToFile = path.join(__dirname, "public/uploads", event.image);
-
+    const pathToFile = path.join(__dirname, uploadDestination, event.image);
     const isFileExist = fs.existsSync(pathToFile);
 
     if (isFileExist) {
@@ -100,7 +100,7 @@ const deleteEvent = async (req, res) => {
       });
     }
 
-    return res.status(200).json({ isFileExist, id, pathToFile });
+    return res.status(200).json({ event });
   } catch (error) {
     return res.status(500).json({
       error: error.message,

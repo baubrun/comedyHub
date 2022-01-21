@@ -1,8 +1,10 @@
 import React from "react";
 import { Oval } from "react-loader-spinner";
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material";
 
 const Spinner = ({ show }) => {
+  const theme = useTheme();
   return show ? (
     <Box
       sx={{
@@ -18,7 +20,7 @@ const Spinner = ({ show }) => {
         width={100}
         strokeWidth={5}
         strokeWidthSecondary={2000}
-        color="#fd558f"
+        color={theme.palette.primary.main}
       />
     </Box>
   ) : null;
