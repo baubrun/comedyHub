@@ -1,14 +1,15 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { hideLoader, showLoader } from "./layoutSlice";
-import { baseUrl } from "./util";
+import eventService from "../components/services/events";
 
-export const postEvent = createAsyncThunk(
-  "/events/post",
+export const getEvents = createAsyncThunk(
+  "/events/getEvents",
   async (_, thunkApi) => {
     try {
       thunkApi.dispatch(showLoader());
-      const { data } = await axios.get(`${baseUrl}/events`);
+      // const { data } = await axios.get(`${baseUrl}/events`);
+      const data = await eventService.getEvents();
       return data;
     } catch (error) {
       thunkApi.dispatch(hideLoader());
@@ -19,53 +20,40 @@ export const postEvent = createAsyncThunk(
   }
 );
 
-export const deleteEvent = createAsyncThunk(
-  "/events/delete",
-  async (eventId, thunkApi) => {
-    try {
-      thunkApi.dispatch(showLoader());
-      const { data } = await axios.delete(`${baseUrl}/events/${eventId}`);
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(hideLoader());
-      return thunkApi.rejectWithValue(error?.response?.data);
-    } finally {
-      thunkApi.dispatch(hideLoader());
-    }
-  }
-);
+// export const patchEvent = createAsyncThunk(
+//   "/events/put",
+//   async (event, thunkApi) => {
+//     try {
+//       thunkApi.dispatch(showLoader());
+//       const { data } = await axios.patch(
+//         `${baseUrl}/events/${event[0]}`,
+//         event[1]
+//       );
+//       return data;
+//     } catch (error) {
+//       thunkApi.dispatch(hideLoader());
+//       return thunkApi.rejectWithValue(error?.response?.data);
+//     } finally {
+//       thunkApi.dispatch(hideLoader());
+//     }
+//   }
+// );
 
-export const getEvents = createAsyncThunk("/events", async (_, thunkApi) => {
-  try {
-    thunkApi.dispatch(showLoader());
-    const { data } = await axios.delete(`${baseUrl}/events`);
-    return data;
-  } catch (error) {
-    thunkApi.dispatch(hideLoader());
-    return thunkApi.rejectWithValue(error?.response?.data);
-  } finally {
-    thunkApi.dispatch(hideLoader());
-  }
-});
-
-export const putEvent = createAsyncThunk(
-  "/events/put",
-  async (event, thunkApi) => {
-    try {
-      thunkApi.dispatch(showLoader());
-      const { data } = await axios.patch(
-        `${baseUrl}/events/${event[0]}`,
-        event[1]
-      );
-      return data;
-    } catch (error) {
-      thunkApi.dispatch(hideLoader());
-      return thunkApi.rejectWithValue(error?.response?.data);
-    } finally {
-      thunkApi.dispatch(hideLoader());
-    }
-  }
-);
+// export const postEvent = createAsyncThunk(
+//   "/events/post",
+//   async (_, thunkApi) => {
+//     try {
+//       thunkApi.dispatch(showLoader());
+//       const { data } = await axios.post(`${baseUrl}/events`);
+//       return data;
+//     } catch (error) {
+//       thunkApi.dispatch(hideLoader());
+//       return thunkApi.rejectWithValue(error?.response?.data);
+//     } finally {
+//       thunkApi.dispatch(hideLoader());
+//     }
+//   }
+// );
 
 export const eventSlice = createSlice({
   name: "events",
@@ -78,20 +66,20 @@ export const eventSlice = createSlice({
     },
   },
   extraReducers: {
-    [postEvent.fulfilled]: (state, action) => {
-      state.events = action?.payload.events;
-    },
+    // [postEvent.fulfilled]: (state, action) => {
+    //   console.log("action.payload :>> ", action.payload);
+    // },
 
-    [deleteEvent.fulfilled]: (state, action) => {
-      console.log("action.payload :>> ", action.payload);
-    },
+    // [deleteEvent.fulfilled]: (state, action) => {
+    //   console.log("action.payload :>> ", action.payload);
+    // },
 
     [getEvents.fulfilled]: (state, action) => {
-      state.events = action?.payload.events;
+      state.events = action?.payload?.events;
     },
-    [putEvent.fulfilled]: (state, action) => {
-      console.log("action.payload :>> ", action.payload);
-    },
+    // [patchEvent.fulfilled]: (state, action) => {
+    //   console.log("action.payload :>> ", action.payload);
+    // },
   },
 });
 

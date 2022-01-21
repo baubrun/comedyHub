@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import baseUrl from "./util";
+import { baseUrl } from "../shared/helpers";
 import orderId from "order-id";
 
 export const processPayment = createAsyncThunk("/processPmt", async (data) => {

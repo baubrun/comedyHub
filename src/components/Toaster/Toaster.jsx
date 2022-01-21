@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { hideToaster } from "../../../redux/layoutSlice";
+import { hideToaster } from "../../redux/layoutSlice";
 
 const Toaster = (props) => {
   const { message, show, status } = props;
@@ -15,7 +15,6 @@ const Toaster = (props) => {
   return (
     <Snackbar
       anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
-      autoHideDuration={5000}
       open={show}
       onClose={close}
       message={message}

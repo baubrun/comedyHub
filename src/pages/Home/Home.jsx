@@ -1,47 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import homeImg from "../../shared/images/club-2.jpg";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
-const titleStyle = {
-  fontWeight: "bolder",
-  paddingX: 1,
-  textTransform: "uppercase",
-};
+import homeImg from "../../shared/images/club-2.jpg";
 
 const Home = () => {
+  const { venues } = useSelector((s) => s.venues);
+  const [values, setValues] = useState([]);
+
+  useEffect(() => {
+    if (venues?.length > 0) setValues(venues);
+  }, [venues]);
+
   return (
-    <>
+    <Box>
       <Grid
         container
         direction="row"
         justifyContent="space-between"
         alignItems="center"
+        sx={{ zIndex: 100 }}
       >
-        <Grid>
-          <Typography component="h2" sx={titleStyle}>
-            le fou fou
-          </Typography>
-        </Grid>
-        <Grid>
-          <Typography sx={titleStyle}>jokes blagues</Typography>
-        </Grid>
-        <Grid>
-          <Typography sx={titleStyle}>rire now</Typography>
-        </Grid>
+        {values.slice(0, 3)?.length > 0 &&
+          values?.map((v, idx) => (
+            <Grid item key={idx}>
+              <Typography
+                component="h2"
+                sx={{
+                  fontWeight: "bolder",
+                  paddingX: 1,
+                  textTransform: "uppercase",
+                }}
+              >
+                {v?.name}
+              </Typography>
+            </Grid>
+          ))}
       </Grid>
 
-      <Grid container>
-        <LazyLoadImage
-          alt=""
-          effect="blur"
-          src={homeImg}
-          style={{ objectFit: "contain", width: "100%" }}
-        />
-      </Grid>
-    </>
+      <LazyLoadImage
+        alt=""
+        effect="blur"
+        src={homeImg}
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          height: "100%",
+        }}
+      />
+    </Box>
   );
 };
 

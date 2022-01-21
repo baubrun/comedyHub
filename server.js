@@ -5,8 +5,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const errorHandler = require("./middlewares/error");
 const logger = require("./middlewares/log");
-const eventRoutes = require("./routes/events");
 const config = require("./config/index");
+const eventRoutes = require("./routes/events");
+const venueRoutes = require("./routes/venues");
 
 /*=============
  Middleware 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/events", eventRoutes);
+app.use("/api/venues", venueRoutes);
 app.use("/", express.static("build"));
 
 /*=============

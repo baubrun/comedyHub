@@ -3,8 +3,11 @@ const router = express.Router();
 const EventController = require("../controllers/events");
 const upload = require("../middlewares/upload");
 
+router.route("/venue/:venueId").get(EventController.getEventsByVenue);
+
 router
-  .route("/:id")
+  .route("/event/:id")
+  .get(EventController.getEvent)
   .delete(EventController.deleteEvent)
   .patch([upload], EventController.patchEvent);
 
