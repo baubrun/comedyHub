@@ -46,7 +46,7 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const found = state.items.findIndex((i) => i._id === action.payload._id);
       if (found === -1) {
-        state.items = [...state.items, action.payload];
+        state.items = [...state.items, { ...action?.payload, quantity: 1 }];
       }
     },
     clearCart: (state) => {
@@ -70,40 +70,38 @@ export const cartSlice = createSlice({
       );
     },
     getTotal: (state) => {
-      let { total, amount } = state.items.reduce(
+      let { total, quantity } = state.items.reduce(
         (cartTotal, cartItem) => {
-          const { price, amount } = cartItem;
-          const itemsTotal = price * amount;
+          const { price, quantity } = cartItem;
+          const itemsTotal = price * quantity;
 
-          cartTotal.amount += amount;
+          cartTotal.quantity += quantity;
           cartTotal.total += itemsTotal;
           return cartTotal;
         },
         {
           total: 0,
-          amount: 0,
+          quantity: 0,
         }
       );
       state.total = total;
-      state.amount = amount;
+      state.quantity = quantity;
     },
     toggleAmount: (state, action) => {
-      state.items = state.items.map((item) => {
-        if (item._id === action.payload._id) {
-          if (action.payload.toggle === "inc") {
-            return {
-              ...item,
-              amount: item.amount + 1,
-            };
+      const foundIdx = state.items.findIndex(
+        (i) => i._id === action.payload._id
+      );
+      if (foundIdx > -1) {
+        if (action.payload.toggle === "inc") {
+          state.items[foundIdx]["quantity"] += 1;
+        } else {
+          if (state.items[foundIdx]["quantity"] === 1) {
+            state.items.splice(foundIdx, 1);
           } else {
-            return {
-              ...item,
-              amount: item.amount - 1,
-            };
+            state.items[foundIdx]["quantity"] -= 1;
           }
         }
-        return item;
-      });
+      }
     },
     setOrderNumber: (state) => {
       state.orderNumber = orderId("MY-SECRET").generate();

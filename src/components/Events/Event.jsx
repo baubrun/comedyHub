@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { baseUrl, dateFormat } from "../../shared/helpers";
-import { hideLoader, showLoader, showToaster } from "../../redux/layoutSlice";
-import { STATUS_ERROR } from "../../shared/constants/status";
+import { dateFormat } from "../../shared/helpers";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 

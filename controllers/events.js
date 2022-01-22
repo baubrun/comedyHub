@@ -32,7 +32,6 @@ const deleteEvent = async (req, res) => {
 
 const getEvent = async (req, res) => {
   const { id } = req.params;
-  console.log("id :>> ", id);
   try {
     const event = await Events.findById(id).populate("venue");
     return res.status(200).json({ event });
