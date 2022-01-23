@@ -14,7 +14,7 @@ import { addToCart } from "../../redux/cartSlice";
 import { dateFormat } from "../../shared/helpers";
 import { hideLoader, showLoader, showToaster } from "../../redux/layoutSlice";
 import { STATUS_ERROR } from "../../shared/constants/status";
-import eventService from "../../components/services/events";
+import eventService from "../../services/events";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";

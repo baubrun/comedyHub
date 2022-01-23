@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl } from "../../shared/helpers";
+import { baseUrl } from "../shared/helpers";
 
 const getEvent = async (id) => {
   const { data } = await axios.get(`${baseUrl}/events/event/${id}`);

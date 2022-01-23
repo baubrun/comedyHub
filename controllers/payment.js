@@ -1,5 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-const Purchase = require("../models/Purchase");
+const Purchase = require("../models/purchase");
 
 const createPayment = async (req, res) => {
   const { paymentId, order, items, total, customer } = req.body;

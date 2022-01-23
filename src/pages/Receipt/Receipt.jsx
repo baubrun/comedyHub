@@ -9,11 +9,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TitleBar from "../../shared/TitleBar/TitleBar";
 import { EVENTS_PAGE } from "../../shared/constants/navigation";
 import { useHistory } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
 
 const Receipt = () => {
   const history = useHistory();
@@ -30,9 +30,13 @@ const Receipt = () => {
   return (
     <>
       <TitleBar text="receipt" />
-      <Box onClick={() => handlePrint()}>
-        <PrintIcon sx={{ fontSize: 24, cursor: "pointer" }} />
-      </Box>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item my={2}>
+          <IconButton onClick={() => handlePrint()}>
+            <PrintIcon sx={{ fontSize: 32, cursor: "pointer" }} />
+          </IconButton>
+        </Grid>
+      </Grid>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
