@@ -2,15 +2,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PurchaseSchema = new Schema({
-  orderNumber: String,
-  customer: String,
+  customer: {
+    name: String,
+    email: String,
+  },
+  order: String,
+  paymentId: String,
+  total: Number,
   items: [
     {
       event: {
         type: mongoose.Schema.ObjectId,
         ref: "Event",
       },
-      amount: Number,
       quantity: Number,
     },
   ],

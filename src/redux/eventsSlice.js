@@ -7,7 +7,6 @@ export const getEvents = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       thunkApi.dispatch(showLoader());
-      // const { data } = await axios.get(`${baseUrl}/events`);
       const data = await eventService.getEvents();
       return data;
     } catch (error) {

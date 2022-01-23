@@ -20,4 +20,21 @@ export const CART_PAGE = {
   render: lazy(() => import("../../pages/Cart/Cart")),
 };
 
-export const PAGES = [EVENT_PAGE, HOME_PAGE, EVENTS_PAGE, CART_PAGE];
+export const CHECKOUT_PAGE = {
+  path: "/Checkout",
+  render: lazy(() => import("../../pages/Checkout/Checkout")),
+};
+
+export const RECEIPT_PAGE = {
+  path: "/receipt",
+  render: lazy(() => import("../../pages/Receipt/Receipt")),
+};
+
+export const PAGES = [
+  EVENT_PAGE,
+  HOME_PAGE,
+  EVENTS_PAGE,
+  CART_PAGE,
+  CHECKOUT_PAGE,
+  RECEIPT_PAGE,
+];

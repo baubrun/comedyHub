@@ -12,7 +12,10 @@ const TitleBar = ({ text }) => {
       sx={{ backgroundColor: "black" }}
     >
       <Grid item>
-        <Typography variant="h5" sx={{ color: "white" }}>
+        <Typography
+          variant="h5"
+          sx={{ color: "white", textTransform: "uppercase" }}
+        >
           {text}
         </Typography>
       </Grid>

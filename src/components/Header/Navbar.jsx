@@ -27,7 +27,7 @@ const Navbar = () => {
   };
 
   const handleClick = (path) => {
-    history.replace(path);
+    history.push(path);
     handleClose();
   };
 

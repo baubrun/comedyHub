@@ -1,46 +1,32 @@
-import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { baseUrl } from "../shared/helpers";
 import orderId from "order-id";
+import paymentService from "../components/services/payment";
 
-export const processPayment = createAsyncThunk("/processPmt", async (data) => {
-  try {
-    const res = await axios.post(baseUrl + "/processPmt", data);
-    return res.data;
-  } catch (error) {
-    return {
-      error: error.message,
-    };
+export const createPayment = createAsyncThunk(
+  "/payment",
+  async (payment, thunkApi) => {
+    try {
+      const data = await paymentService.createPayment(payment);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error?.response?.data);
+    }
   }
-});
-
-export const createPurchase = createAsyncThunk("/purchase", async (data) => {
-  try {
-    const res = await axios.post(baseUrl + "/purchase", data);
-    return res.data;
-  } catch (error) {
-    return {
-      error: error.message,
-    };
-  }
-});
+);
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
-    amount: 0,
-    total: 0,
-    loading: false,
-    payErrorMsg: "",
-    paySuccess: false,
-    purchaseCreated: false,
     orderNumber: "",
+    payPending: false,
+    paySuccess: false,
     receipt: {
       items: [],
       total: null,
       orderNumber: "",
     },
+    total: 0,
   },
   reducers: {
     addToCart: (state, action) => {
@@ -51,15 +37,13 @@ export const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = [];
-      state.amount = 0;
       state.total = 0;
       state.loading = false;
-      state.payErrorMsg = "";
       state.paySuccess = false;
       state.purchaseCreated = false;
       state.orderNumber = "";
     },
-    receipt: (state) => {
+    createReceipt: (state) => {
       state.receipt.items = state.items;
       state.receipt.orderNumber = state.orderNumber;
       state.receipt.total = state.total;
@@ -81,7 +65,6 @@ export const cartSlice = createSlice({
         },
         {
           total: 0,
-          quantity: 0,
         }
       );
       state.total = total;
@@ -108,35 +91,12 @@ export const cartSlice = createSlice({
     },
   },
   extraReducers: {
-    [createPurchase.fulfilled]: (state, action) => {
-      state.loading = false;
-      const { error } = action.payload;
-      if (error) {
-        state.payErrorMsg = error;
-      } else {
-        state.purchaseCreated = true;
-      }
+    [createPayment.pending]: (state) => {
+      state.payPending = true;
     },
-    [createPurchase.rejected]: (state, action) => {
-      state.loading = false;
-      state.payErrorMsg = action.error;
-    },
-
-    [processPayment.pending]: (state) => {
-      state.loading = true;
-    },
-    [processPayment.fulfilled]: (state, action) => {
-      state.loading = false;
-      const { error } = action.payload;
-      if (error) {
-        state.payErrorMsg = error;
-      } else {
-        state.paySuccess = true;
-      }
-    },
-    [processPayment.rejected]: (state, action) => {
-      state.loading = false;
-      state.payErrorMsg = action.error;
+    [createPayment.fulfilled]: (state, action) => {
+      state.payPending = false;
+      state.paySuccess = action?.payload?.success;
     },
   },
 });
@@ -146,7 +106,7 @@ export const {
   clearCart,
   removeItem,
   getTotal,
-  receipt,
+  createReceipt,
   toggleAmount,
   setOrderNumber,
 } = cartSlice.actions;

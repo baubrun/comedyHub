@@ -12,7 +12,7 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import Event from "../../components/Events/Event";
 import CalendarView from "../../components/CalendarView/CalendarView";
-import TitleBar from "../../components/TitleBar/TitleBar";
+import TitleBar from "../../shared/TitleBar/TitleBar";
 import { useTheme } from "@mui/material";
 import { hideLoader, showLoader, showToaster } from "../../redux/layoutSlice";
 import { STATUS_ERROR } from "../../shared/constants/status";
@@ -148,7 +148,7 @@ const Events = () => {
 
   return (
     <>
-      <TitleBar text="EVENTS" />
+      <TitleBar text="events" />
       <Grid
         container
         direction="column"

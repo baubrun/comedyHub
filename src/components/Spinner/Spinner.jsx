@@ -20,7 +20,7 @@ const Spinner = ({ show }) => {
         width={100}
         strokeWidth={5}
         strokeWidthSecondary={2000}
-        color={theme.palette.primary.main}
+        color={theme.palette.secondary.main}
       />
     </Box>
   ) : null;

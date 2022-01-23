@@ -18,6 +18,7 @@ import eventService from "../../components/services/events";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { CART_PAGE } from "../../shared/constants/navigation";
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -68,7 +69,7 @@ const EventDetail = () => {
 
   const handleReserve = () => {
     dispatch(addToCart(event));
-    history.replace("/cart");
+    history.push(CART_PAGE.path);
   };
 
   if (!event) return null;

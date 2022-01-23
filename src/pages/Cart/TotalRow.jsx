@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { setOrderNumber, clearCart } from "../../redux/cartSlice";
 import NumberFormat from "react-number-format";
+import { CHECKOUT_PAGE } from "../../shared/constants/navigation";
 
 const TotalRow = () => {
   const history = useHistory();
@@ -50,7 +51,7 @@ const TotalRow = () => {
             variant="contained"
             onClick={() => {
               dispatch(setOrderNumber());
-              history.push("/checkout");
+              history.push(CHECKOUT_PAGE.path);
             }}
           >
             CHECKOUT

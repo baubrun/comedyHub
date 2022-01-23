@@ -8,6 +8,7 @@ const logger = require("./middlewares/log");
 const config = require("./config/index");
 const eventRoutes = require("./routes/events");
 const venueRoutes = require("./routes/venues");
+const paymentRoutes = require("./routes/payment");
 
 /*=============
  Middleware 
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use("/api/events", eventRoutes);
 app.use("/api/venues", venueRoutes);
+app.use("/api/payment", paymentRoutes);
 app.use("/", express.static("build"));
 
 /*=============
