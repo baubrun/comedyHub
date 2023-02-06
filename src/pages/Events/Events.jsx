@@ -19,19 +19,14 @@ const Events = () => {
   const { venues } = useSelector((s) => s.venues);
   const { isLoading } = useSelector((s) => s.layout);
   const [selectDirty, setSelectDirty] = useState(false);
-  const [values, setValues] = useState({
-    calendarViewShow: false,
-    listViewShow: true,
-    venue: "",
-    startDate: "",
-    events: [],
-  });
+  const [selectedVenue, setSelectedVenue] = useState({ _id: "", name: "" });
+  const [events, setEvents] = useState([]);
 
   const fetchEvents = async (venue) => {
     try {
       dispatch(showLoader());
-      const result = await eventService.getEventsByVenue(venue);
-      setValues((prev) => ({ ...prev, events: result?.events }));
+      const results = await eventService.getEventsByVenue(venue);
+      setEvents(results?.events);
     } catch (err) {
       dispatch(
         showToaster({
@@ -45,50 +40,18 @@ const Events = () => {
   };
 
   useEffect(() => {
-    if (venues.length > 0) setValues({ venue: venues?.[0]?._id });
+    const venue = venues?.[0];
+    if (venue) {
+      setSelectedVenue(venue);
+      fetchEvents(venue?._id);
+    }
   }, [venues]);
 
-  useEffect(() => {
-    if (values?.venue) fetchEvents(values?.venue);
-  }, [values?.venue]);
-
-  const handleVenueChange = (event) => {
+  const handleVenueChange = (evt) => {
     setSelectDirty(true);
-    setValues((prev) => ({ ...prev, venue: event.target.value }));
-  };
-
-  const showEvents = () => {
-    if (values?.events?.length < 1 && !isLoading) {
-      return (
-        <Typography variant="h4" sx={{ textTransform: "uppercase" }}>
-          {selectDirty && "no events found"}
-        </Typography>
-      );
-    }
-
-    if (values?.events?.length > 0) {
-      return (
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          columnSpacing={2}
-          rowSpacing={2}
-          columns={{ xs: 1 }}
-          wrap="wrap"
-        >
-          {values?.events
-            ?.filter((event) =>
-              event?.venue?.toLowerCase().includes(values?.venue?.toLowerCase())
-            )
-            .map((event, idx) => (
-              <Grid item key={idx}>
-                <Event event={event} key={idx} venue={values?.venue} />
-              </Grid>
-            ))}
-        </Grid>
-      );
-    }
+    const found = venues.find((venue) => venue?.name === evt?.target?.value);
+    setSelectedVenue(found);
+    fetchEvents(found?._id);
   };
 
   return (
@@ -113,18 +76,18 @@ const Events = () => {
             <Select
               labelId="select"
               id="select"
-              value={values?.venue || ""}
-              onChange={handleVenueChange}
+              value={selectedVenue?.name ?? ""}
+              onChange={(venue) => handleVenueChange(venue)}
               label="Venue"
               sx={{ textTransform: "uppercase" }}
             >
-              {venues?.map((v, idx) => (
+              {venues?.map((venue, idx) => (
                 <MenuItem
                   key={idx}
-                  value={v?._id}
+                  value={venue?.name}
                   sx={{ textTransform: "uppercase" }}
                 >
-                  {v?.name}
+                  {venue?.name}
                 </MenuItem>
               ))}
             </Select>
@@ -132,7 +95,27 @@ const Events = () => {
         </Grid>
 
         <Grid item id="events-body">
-          {showEvents()}
+          {!events?.length && !isLoading ? (
+            <Typography variant="h4" sx={{ textTransform: "uppercase" }}>
+              {selectDirty && "no events found"}
+            </Typography>
+          ) : (
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              columnSpacing={2}
+              rowSpacing={2}
+              columns={{ xs: 1 }}
+              wrap="wrap"
+            >
+              {events.map((event, idx) => (
+                <Grid item key={idx}>
+                  <Event event={event} key={idx} venue={event?.venue?.name} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </>

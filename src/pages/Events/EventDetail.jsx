@@ -86,7 +86,7 @@ const EventDetail = () => {
         <Avatar
           className={classes.large}
           alt={event?.title}
-          src={require(`../../shared/uploads/${event?.image}`)}
+          src={require(`../../shared/uploads/${event?.image}.jpeg`)}
         />
       </Grid>
       <Grid item>

@@ -8,34 +8,14 @@ const layoutSlice = createSlice({
     toasterMessage: null,
     toasterStatus: STATUS_INFO,
     isLoading: false,
-    alertContinue: false,
-    alertData: null,
-    isAlertOpen: false,
-    alertMessage: null,
-    alertTitle: null,
   },
 
   reducers: {
-    cancelAlert: (state) => {
-      state.isAlertOpen = false;
-      state.alertContinue = false;
-      state.alertData = null;
-    },
-    continueAlert: (state) => {
-      state.alertContinue = true;
-      state.isAlertOpen = false;
-    },
-    showAlert: (state, action) => {
-      state.isAlertOpen = true;
-      state.alertData = action.payload?.alertData;
-      state.alertMessage = action.payload?.message;
-      state.alertTitle = action.payload?.title;
-    },
     hideLoader: (state) => {
       state.isLoading = false;
       state.loadingMessage = null;
     },
-    showLoader: (state, action) => {
+    showLoader: (state) => {
       state.isLoading = true;
     },
     hideToaster: (state) => {

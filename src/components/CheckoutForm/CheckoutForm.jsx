@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import _ from "lodash";
 import { BallTriangle } from "react-loader-spinner";
 import Typography from "@mui/material/Typography";
 import { clearCart, createPayment, createReceipt } from "../../redux/cartSlice";

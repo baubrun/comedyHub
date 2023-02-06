@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { IconButton, ListItemText } from "@mui/material";
-import React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
+import Typography from "@mui/material/Typography";
 import {
   EVENTS_PAGE,
   HOME_PAGE,
@@ -15,7 +16,7 @@ import {
 } from "../../shared/constants/navigation";
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const history = useHistory();
 
@@ -67,6 +68,9 @@ const Navbar = () => {
           <ListItemText primary="CART" />
         </MenuItem>
       </Menu>
+      <Typography variant="h6" sx={{ mr: 4, textTransform: "uppercase" }}>
+        comedy hub
+      </Typography>
     </>
   );
 };

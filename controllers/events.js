@@ -1,6 +1,7 @@
 const Events = require("../models/events");
 const mongoose = require("mongoose");
 
+
 const getEvent = async (req, res) => {
   const { id } = req.params;
   try {
@@ -27,9 +28,7 @@ const getEvents = async (req, res) => {
 const getEventsByVenue = async (req, res) => {
   const { venueId } = req.params;
   try {
-    const events = await Events.aggregate([
-      { $match: { venue: mongoose.Types.ObjectId(venueId) } },
-    ]).sort({ startDate: 1 });
+    const events = await Events.find({venue: mongoose.Types.ObjectId(venueId)}).populate("venue")
     return res.status(200).json({ events });
   } catch (error) {
     return res.status(500).json({

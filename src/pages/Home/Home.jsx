@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,11 +9,6 @@ import homeImg from "../../shared/images/club-2.jpg";
 
 const Home = () => {
   const { venues } = useSelector((s) => s.venues);
-  const [values, setValues] = useState([]);
-
-  useEffect(() => {
-    if (venues?.length > 0) setValues(venues);
-  }, [venues]);
 
   return (
     <Box>
@@ -24,8 +19,8 @@ const Home = () => {
         alignItems="center"
         sx={{ zIndex: 100 }}
       >
-        {values.slice(0, 3)?.length > 0 &&
-          values?.map((v, idx) => (
+        {
+          venues?.map((v, idx) => (
             <Grid item key={idx}>
               <Typography
                 component="h2"

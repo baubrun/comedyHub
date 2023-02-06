@@ -13,7 +13,6 @@ const paymentRoutes = require("./routes/payment");
 /*=============
  Middleware 
  ==============*/
-
 app.use(express.json());
 app.use(cors());
 
@@ -32,7 +31,7 @@ app.use(errorHandler);
   ===================*/
 
 const options = {
-  dbName: "comedy-hub",
+  dbName: "heroku_mdc8wws3",
 };
 
 mongoose
