@@ -1,6 +1,7 @@
 import moment from "moment";
 
-export const baseUrl = "http://localhost:5000/api";
+
+export const baseUrl = "https://comedyhub.onrender.com/api";
 
 export const dateFormat = () => moment().format("DD-MM-YYYY");
 
